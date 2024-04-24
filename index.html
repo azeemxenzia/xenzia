@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        /* Inline CSS for styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        li {
+            margin-right: 10px;
+            margin-bottom: 15px;
+        }
+
+        .display-text {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-text {
+            display: none;
+        }
+
+        .display-text:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Animation for pop-up message */
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pop-up {
+            position: absolute;
+            top: 10%;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            animation: fade-in 0.5s ease;
+            visibility: hidden;
+            max-width: 300px; /* Constant width for pop-up message */
+            word-wrap: break-word;
+        }
+
+        .pop-up.show {
+            visibility: visible;
+        }
+	        /* Inline CSS for styling */
+        #header {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 50px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+	<div id="header">Xenzia:<span id="typedText"></span></div>
+    
+    <p>Click on the messages below to copy:</p>
+    <ul>
+        <li><span class="display-text" onclick="copyText(this)">Hey</span><span class="copy-text">Hey i am xenzia</span></li>
+        <li><span class="display-text" onclick="copyText(this)">How are you?</span><span class="copy-text">I am fine, thank you!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Nice to meet you</span><span class="copy-text">Nice to meet you too!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Hey</span><span class="copy-text">Hey i am xenzia</span></li>
+        <li><span class="display-text" onclick="copyText(this)">How are you?</span><span class="copy-text">I am fine, thank you!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Nice to meet you</span><span class="copy-text">Nice to meet you too!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Hey</span><span class="copy-text">Hey i am xenzia</span></li>
+        <li><span class="display-text" onclick="copyText(this)">How are you?</span><span class="copy-text">I am fine, thank you!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Nice to meet you</span><span class="copy-text">Nice to meet you too!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Hey</span><span class="copy-text">Hey i am xenzia</span></li>
+        <li><span class="display-text" onclick="copyText(this)">How are you?</span><span class="copy-text">I am fine, thank you!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Nice to meet you</span><span class="copy-text">Nice to meet you too!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Hey</span><span class="copy-text">Hey i am xenzia</span></li>
+        <li><span class="display-text" onclick="copyText(this)">How are you?</span><span class="copy-text">I am fine, thank you!</span></li>
+        <li><span class="display-text" onclick="copyText(this)">Nice to meet you</span><span class="copy-text">Nice to meet you too!</span></li>
+        <!-- Add more preset messages here -->
+    </ul>
+
+    <!-- Pop-up message container -->
+    <div class="pop-up" id="popUpMessage"></div>
+
+    <script>
+        function copyText(element) {
+            var textToCopy = element.textContent;
+            var textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            // Show pop-up message
+            var popUpMessage = document.getElementById('popUpMessage');
+            popUpMessage.textContent = textToCopy;
+            popUpMessage.classList.add('show');
+            setTimeout(function() {
+                popUpMessage.classList.remove('show');
+            }, 1000); // Remove pop-up after 1 second
+        }
+
+	// List of characters to type
+        var textToType = " Welcome to Chat Made by Azeem";
+        var index = 0;
+        var speed = 100; // Speed of typing animation (in milliseconds)
+        var header = document.getElementById("typedText");
+        var isDeleting = false;
+
+        function type() {
+            if (index < textToType.length) {
+                // Check if it's typing or deleting
+                if (!isDeleting) {
+                    // Typing
+                    header.textContent += textToType.charAt(index);
+                    index++;
+                } else {
+                    // Deleting
+                    header.textContent = textToType.substring(0, index - 1);
+                    index--;
+                }
+
+                // Set speed for typing
+                var typingSpeed = Math.random() * (100 - 50) + 50;
+                setTimeout(type, typingSpeed);
+            } else {
+                // Change status to deleting
+                isDeleting = !isDeleting;
+                // Wait before starting typing again
+                setTimeout(type, 500);
+            }
+        }
+
+        // Start typing animation
+        type();
+    </script>
+</body>
+</html>
